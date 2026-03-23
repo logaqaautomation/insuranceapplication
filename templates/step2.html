@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Step 2 - Line of Business Selection{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <div class="form-container">
+        <div class="step-indicator">
+            <div class="step completed">
+                <span class="step-number">1</span>
+                <span class="step-label">Personal Info</span>
+            </div>
+            <div class="step active">
+                <span class="step-number">2</span>
+                <span class="step-label">Line of Business</span>
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                <span class="step-label">Coverage</span>
+            </div>
+            <div class="step">
+                <span class="step-number">4</span>
+                <span class="step-label">Premium</span>
+            </div>
+            <div class="step">
+                <span class="step-number">5</span>
+                <span class="step-label">Policy</span>
+            </div>
+        </div>
+
+        <div class="form-card">
+            <h2>Step 2: Line of Business & Coverage Type</h2>
+            <p class="step-description">Select your line of business and choose your coverage level.</p>
+
+            <form method="POST" action="{{ url_for('step2') }}" id="step2-form">
+                <div class="form-group">
+                    <label for="line_of_business">
+                        Select Line of Business
+                        <span class="required">*</span>
+                    </label>
+                    <select 
+                        id="line_of_business" 
+                        name="line_of_business"
+                        data-testid="line_of_business_select"
+                        required
+                    >
+                        <option value="">-- Choose an option --</option>
+                        <option value="auto">Auto Insurance</option>
+                        <option value="home">Home Insurance</option>
+                        <option value="health">Health Insurance</option>
+                        <option value="life">Life Insurance</option>
+                    </select>
+                    <span class="error-message" id="lob_error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Select Coverage Type
+                        <span class="required">*</span>
+                    </label>
+                    <div class="radio-group" data-testid="coverage_type_radios">
+                        <div class="radio-item">
+                            <input 
+                                type="radio" 
+                                id="basic" 
+                                name="coverage_type" 
+                                value="Basic Coverage"
+                                data-testid="coverage_type_basic"
+                                required
+                            >
+                            <label for="basic" class="radio-label">
+                                <span class="radio-title">Basic Coverage</span>
+                                <span class="radio-description">Essential protection</span>
+                            </label>
+                        </div>
+
+                        <div class="radio-item">
+                            <input 
+                                type="radio" 
+                                id="standard" 
+                                name="coverage_type" 
+                                value="Standard Coverage"
+                                data-testid="coverage_type_standard"
+                            >
+                            <label for="standard" class="radio-label">
+                                <span class="radio-title">Standard Coverage</span>
+                                <span class="radio-description">Recommended</span>
+                            </label>
+                        </div>
+
+                        <div class="radio-item">
+                            <input 
+                                type="radio" 
+                                id="premium" 
+                                name="coverage_type" 
+                                value="Premium Coverage"
+                                data-testid="coverage_type_premium"
+                            >
+                            <label for="premium" class="radio-label">
+                                <span class="radio-title">Premium Coverage</span>
+                                <span class="radio-description">Maximum protection</span>
+                            </label>
+                        </div>
+                    </div>
+                    <span class="error-message" id="coverage_error"></span>
+                </div>
+
+                <div class="form-actions">
+                    <a href="{{ url_for('step1') }}" class="btn btn-secondary">← Previous Step</a>
+                    <button type="submit" class="btn btn-primary" id="step2_submit_btn">Next Step</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<script src="{{ url_for('static', filename='js/form-validation.js') }}"></script>
+{% endblock %}

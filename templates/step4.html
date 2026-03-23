@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}Step 4 - Premium Calculation{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <div class="form-container">
+        <div class="step-indicator">
+            <div class="step completed">
+                <span class="step-number">1</span>
+                <span class="step-label">Personal Info</span>
+            </div>
+            <div class="step completed">
+                <span class="step-number">2</span>
+                <span class="step-label">Line of Business</span>
+            </div>
+            <div class="step completed">
+                <span class="step-number">3</span>
+                <span class="step-label">Coverage</span>
+            </div>
+            <div class="step active">
+                <span class="step-number">4</span>
+                <span class="step-label">Premium</span>
+            </div>
+            <div class="step">
+                <span class="step-number">5</span>
+                <span class="step-label">Policy</span>
+            </div>
+        </div>
+
+        <div class="form-card">
+            <h2>Step 4: Premium Calculation & Payment Options</h2>
+            <p class="step-description">Review your calculated premium and select a payment option.</p>
+
+            <!-- Premium Details Table -->
+            <div class="premium-section">
+                <h3>Premium Details</h3>
+                <table class="premium-table" data-testid="premium_details_table">
+                    <tbody>
+                        <tr>
+                            <td class="label">Line of Business:</td>
+                            <td class="value" data-testid="premium_lob">{{ user_data.line_of_business }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Age Factor:</td>
+                            <td class="value" data-testid="premium_age_factor">{{ user_data.age }} years</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Selected Coverages:</td>
+                            <td class="value" data-testid="premium_coverages">
+                                {% for coverage in premium_data.selected_coverages %}
+                                    {% if loop.last %}
+                                        {{ coverage }}
+                                    {% else %}
+                                        {{ coverage }}<br>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="label"><strong>Annual Premium:</strong></td>
+                            <td class="value"><strong class="amount" data-testid="premium_annual">${{ "%.2f"|format(premium_data.annual_premium) }}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Premium Breakdown -->
+            <div class="breakdown-section">
+                <h3>Premium Breakdown</h3>
+                <div class="breakdown-grid">
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Base Premium</span>
+                        <span class="breakdown-value" data-testid="breakdown_base">${{ "%.2f"|format(premium_data.base_premium) }}</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Coverage Multiplier</span>
+                        <span class="breakdown-value" data-testid="breakdown_multiplier">{{ premium_data.coverage_multiplier }}x</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Age Factor</span>
+                        <span class="breakdown-value" data-testid="breakdown_age">{{ premium_data.age_factor }}x</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Coverage Premium</span>
+                        <span class="breakdown-value" data-testid="breakdown_coverage">${{ "%.2f"|format(premium_data.coverage_premium) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Options -->
+            <form method="POST" action="{{ url_for('step4') }}" id="step4-form">
+                <div class="form-group">
+                    <label>
+                        Payment Options
+                        <span class="required">*</span>
+                    </label>
+                    <div class="payment-options" data-testid="payment_options">
+                        <div class="payment-item">
+                            <input 
+                                type="radio" 
+                                id="monthly" 
+                                name="payment_option" 
+                                value="Monthly Payment"
+                                data-testid="payment_monthly"
+                                required
+                            >
+                            <label for="monthly" class="payment-label">
+                                <span class="payment-title">Monthly Payment</span>
+                                <span class="payment-amount" data-testid="monthly_amount">${{ "%.2f"|format(premium_data.monthly_payment) }} per month</span>
+                            </label>
+                        </div>
+
+                        <div class="payment-item">
+                            <input 
+                                type="radio" 
+                                id="quarterly" 
+                                name="payment_option" 
+                                value="Quarterly Payment"
+                                data-testid="payment_quarterly"
+                            >
+                            <label for="quarterly" class="payment-label">
+                                <span class="payment-title">Quarterly Payment</span>
+                                <span class="payment-amount" data-testid="quarterly_amount">${{ "%.2f"|format(premium_data.quarterly_payment) }} per quarter</span>
+                            </label>
+                        </div>
+
+                        <div class="payment-item best-value">
+                            <input 
+                                type="radio" 
+                                id="annual" 
+                                name="payment_option" 
+                                value="Annual Payment"
+                                data-testid="payment_annual"
+                                checked
+                            >
+                            <label for="annual" class="payment-label">
+                                <span class="payment-title">Annual Payment</span>
+                                <span class="payment-amount" data-testid="annual_amount">${{ "%.2f"|format(premium_data.annual_premium) }}<span class="best-badge"> (Best Value!)</span></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <a href="{{ url_for('step3') }}" class="btn btn-secondary">← Previous Step</a>
+                    <button type="submit" class="btn btn-primary" id="step4_submit_btn">Issue Policy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<script src="{{ url_for('static', filename='js/form-validation.js') }}"></script>
+{% endblock %}

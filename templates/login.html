@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Insurance Practice Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>🏛️ Insurance Practice Application</h1>
+                <p>Login to continue</p>
+            </div>
+
+            {% if error %}
+            <div class="error-alert" data-testid="login_error">
+                <span class="error-icon">✗</span>
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('login') }}" class="login-form" id="login_form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username"
+                        placeholder="Enter your username"
+                        data-testid="username_input"
+                        required
+                        autofocus
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password"
+                        placeholder="Enter your password"
+                        data-testid="password_input"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-large login-btn" id="login_submit_btn">
+                    Login
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <div class="credentials-info">
+                    <p class="info-label">Demo Credentials:</p>
+                    <div class="credential-row">
+                        <span class="label">Username:</span>
+                        <span class="value" data-testid="demo_username">loga-automation</span>
+                    </div>
+                    <div class="credential-row">
+                        <span class="label">Password:</span>
+                        <span class="value" data-testid="demo_password">test1234</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="login-footer-main">
+            <p>&copy; 2026 Insurance Practice Application - For Automation Testing</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

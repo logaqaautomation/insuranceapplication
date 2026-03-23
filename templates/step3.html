@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Step 3 - Coverage Selection{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <div class="form-container">
+        <div class="step-indicator">
+            <div class="step completed">
+                <span class="step-number">1</span>
+                <span class="step-label">Personal Info</span>
+            </div>
+            <div class="step completed">
+                <span class="step-number">2</span>
+                <span class="step-label">Line of Business</span>
+            </div>
+            <div class="step active">
+                <span class="step-number">3</span>
+                <span class="step-label">Coverage</span>
+            </div>
+            <div class="step">
+                <span class="step-number">4</span>
+                <span class="step-label">Premium</span>
+            </div>
+            <div class="step">
+                <span class="step-number">5</span>
+                <span class="step-label">Policy</span>
+            </div>
+        </div>
+
+        <div class="form-card">
+            <h2>Step 3: Select Coverages & Upload Documents</h2>
+            <p class="step-description">Choose your desired coverage options and upload supporting documents.</p>
+
+            <!-- Information Summary Table -->
+            <div class="summary-section">
+                <h3>Your Information Summary</h3>
+                <table class="info-table" data-testid="information_summary_table">
+                    <tbody>
+                        <tr>
+                            <td class="label">Name</td>
+                            <td class="value" data-testid="summary_name">{{ user_data.full_name }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Age</td>
+                            <td class="value" data-testid="summary_age">{{ user_data.age }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Address</td>
+                            <td class="value" data-testid="summary_address">{{ user_data.address }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Line of Business</td>
+                            <td class="value" data-testid="summary_lob">{{ user_data.line_of_business }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <form method="POST" action="{{ url_for('step3') }}" id="step3-form" enctype="multipart/form-data">
+                <!-- Coverage Selection Checkboxes -->
+                <div class="form-group">
+                    <label>
+                        Available Coverages
+                        <span class="required">*</span>
+                    </label>
+                    <div class="checkbox-group" data-testid="coverage_checkboxes">
+                        {% for coverage in coverages %}
+                        <div class="checkbox-item">
+                            <input 
+                                type="checkbox" 
+                                id="coverage_{{ loop.index }}" 
+                                name="{{ coverage }}"
+                                value="{{ coverage }}"
+                                data-testid="coverage_{{ coverage.lower().replace(' ', '_') }}"
+                            >
+                            <label for="coverage_{{ loop.index }}" class="checkbox-label">
+                                <span class="checkbox-title">{{ coverage }}</span>
+                                {% if coverage == 'Liability Coverage' %}
+                                <span class="checkbox-description">Third party protection</span>
+                                {% elif coverage == 'Collision Coverage' %}
+                                <span class="checkbox-description">Vehicle damage</span>
+                                {% elif coverage == 'Comprehensive Coverage' %}
+                                <span class="checkbox-description">All-risk protection</span>
+                                {% elif coverage == 'Medical Payments' %}
+                                <span class="checkbox-description">Health coverage</span>
+                                {% elif coverage == 'Uninsured Motorist' %}
+                                <span class="checkbox-description">Extra protection</span>
+                                {% endif %}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <span class="error-message" id="coverage_error"></span>
+                </div>
+
+                <!-- File Upload -->
+                <div class="form-group">
+                    <label for="document">
+                        Upload Supporting Document
+                    </label>
+                    <input 
+                        type="file" 
+                        id="document" 
+                        name="document"
+                        data-testid="document_upload"
+                        accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
+                    >
+                    <p class="field-help">Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG (Max 16MB)</p>
+                </div>
+
+                <div class="form-actions">
+                    <a href="{{ url_for('step2') }}" class="btn btn-secondary">← Previous Step</a>
+                    <button type="submit" class="btn btn-primary" id="step3_submit_btn">Next Step</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<script src="{{ url_for('static', filename='js/form-validation.js') }}"></script>
+{% endblock %}

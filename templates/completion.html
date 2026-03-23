@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Application Complete{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <div class="completion-container">
+        <div class="completion-card">
+            <div class="completion-icon">✨</div>
+            <h2>✓ Practice Application Complete!</h2>
+            <p class="completion-message">You've successfully navigated through a complete policy creation workflow demonstrating various automation testing elements.</p>
+
+            <!-- Elements Covered -->
+            <div class="elements-covered">
+                <h3>Elements Tested:</h3>
+                <div class="elements-grid">
+                    <div class="element">
+                        <span class="element-icon">✓</span>
+                        <span class="element-name">TextBox & TextArea inputs (Step 1)</span>
+                    </div>
+                    <div class="element">
+                        <span class="element-icon">✓</span>
+                        <span class="element-name">ListBox & Radio Buttons (Step 2)</span>
+                    </div>
+                    <div class="element">
+                        <span class="element-icon">✓</span>
+                        <span class="element-name">Checkboxes & File Upload (Step 3)</span>
+                    </div>
+                    <div class="element">
+                        <span class="element-icon">✓</span>
+                        <span class="element-name">Web Tables (Steps 3, 4, 5)</span>
+                    </div>
+                    <div class="element">
+                        <span class="element-icon">✓</span>
+                        <span class="element-name">Links & Buttons (Throughout)</span>
+                    </div>
+                    <div class="element">
+                        <span class="element-icon">✓</span>
+                        <span class="element-name">Dynamic Data Display (Steps 4, 5)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Playwright Testing Tips -->
+            <div class="testing-tips">
+                <h3>💡 Playwright Testing Tips:</h3>
+                <ul>
+                    <li>Use <code>page.fill()</code> for text inputs and textareas</li>
+                    <li>Use <code>page.select()</code> for dropdown selections</li>
+                    <li>Use <code>page.check()</code> for checkboxes</li>
+                    <li>Use <code>page.click()</code> for radio buttons</li>
+                    <li>Use <code>page.set_input_files()</code> for file uploads</li>
+                    <li>Use <code>page.locator()</code> with test IDs for reliable selectors</li>
+                    <li>All elements have <code>data-testid</code> attributes for easy identification</li>
+                </ul>
+            </div>
+
+            <!-- Actions -->
+            <div class="completion-actions">
+                <a href="{{ url_for('index') }}" class="btn btn-primary btn-large">Start Over</a>
+                <a href="" class="btn btn-secondary btn-large" onclick="window.print(); return false;">Print Certificate</a>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

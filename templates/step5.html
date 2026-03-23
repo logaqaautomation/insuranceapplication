@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Step 5 - Policy Certificate{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <div class="form-container">
+        <div class="step-indicator">
+            <div class="step completed">
+                <span class="step-number">1</span>
+                <span class="step-label">Personal Info</span>
+            </div>
+            <div class="step completed">
+                <span class="step-number">2</span>
+                <span class="step-label">Line of Business</span>
+            </div>
+            <div class="step completed">
+                <span class="step-number">3</span>
+                <span class="step-label">Coverage</span>
+            </div>
+            <div class="step completed">
+                <span class="step-number">4</span>
+                <span class="step-label">Premium</span>
+            </div>
+            <div class="step active">
+                <span class="step-number">5</span>
+                <span class="step-label">Policy</span>
+            </div>
+        </div>
+
+        <div class="form-card policy-card">
+            <!-- Success Message -->
+            <div class="success-message" data-testid="policy_success_message">
+                <h2>✓ Policy Successfully Issued!</h2>
+                <p>Your insurance policy has been created and activated</p>
+            </div>
+
+            <!-- Insurance Policy Certificate -->
+            <div class="certificate">
+                <div class="certificate-header">
+                    <h3>Insurance Policy Certificate</h3>
+                    <div class="certificate-meta">
+                        <p>Policy Number: <span class="policy-number" data-testid="certificate_policy_number">{{ policy_data.policy_number }}</span></p>
+                        <p>Issued: <span data-testid="certificate_issue_date">{{ policy_data.issue_date }}</span></p>
+                    </div>
+                </div>
+
+                <!-- Policyholder Information Table -->
+                <div class="certificate-section">
+                    <h4>Policyholder Information</h4>
+                    <table class="certificate-table" data-testid="policyholder_info_table">
+                        <tbody>
+                            <tr>
+                                <td class="label">Name:</td>
+                                <td class="value" data-testid="cert_name">{{ policy_data.full_name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="label">Age:</td>
+                                <td class="value" data-testid="cert_age">{{ policy_data.age }} years old</td>
+                            </tr>
+                            <tr>
+                                <td class="label">Address:</td>
+                                <td class="value" data-testid="cert_address">{{ policy_data.address }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Policy Details Table -->
+                <div class="certificate-section">
+                    <h4>Policy Details</h4>
+                    <table class="certificate-table" data-testid="policy_details_table">
+                        <tbody>
+                            <tr>
+                                <td class="label">Line of Business:</td>
+                                <td class="value" data-testid="cert_lob">
+                                    {% if policy_data.line_of_business == 'auto' %}
+                                        Auto Insurance
+                                    {% elif policy_data.line_of_business == 'home' %}
+                                        Home Insurance
+                                    {% elif policy_data.line_of_business == 'health' %}
+                                        Health Insurance
+                                    {% elif policy_data.line_of_business == 'life' %}
+                                        Life Insurance
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label">Coverage Type:</td>
+                                <td class="value" data-testid="cert_coverage_type">{{ policy_data.coverage_type }}</td>
+                            </tr>
+                            <tr>
+                                <td class="label">Coverages:</td>
+                                <td class="value" data-testid="cert_coverages">
+                                    {% for coverage in policy_data.coverages %}
+                                        {% if loop.last %}
+                                            {{ coverage }}
+                                        {% else %}
+                                            {{ coverage }}<br>
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            <tr class="highlight-row">
+                                <td class="label"><strong>Annual Premium:</strong></td>
+                                <td class="value"><strong class="amount" data-testid="cert_premium">${{ "%.2f"|format(policy_data.annual_premium) }}</strong></td>
+                            </tr>
+                            <tr class="status-row">
+                                <td class="label"><strong>Policy Status:</strong></td>
+                                <td class="value"><strong class="status-badge">✓ ACTIVE</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Policy Terms & Conditions -->
+                <div class="certificate-section">
+                    <h4>Policy Terms & Conditions</h4>
+                    <ul class="terms-list" data-testid="policy_terms">
+                        <li>✓ Coverage is effective from the issue date</li>
+                        <li>✓ Policy renews automatically every 12 months</li>
+                        <li>✓ You can modify coverage options at any time</li>
+                        <li>✓ Claims can be filed through the customer portal</li>
+                        <li>✓ 24/7 customer support available</li>
+                    </ul>
+                </div>
+
+                <!-- What's Next Section -->
+                <div class="certificate-section whats-next">
+                    <h4>What's Next?</h4>
+                    <ol class="next-steps" data-testid="next_steps">
+                        <li>
+                            <strong>Verify Your Information</strong>
+                            <p>Review all policy details and contact us if any changes are needed</p>
+                        </li>
+                        <li>
+                            <strong>Set Up Payment</strong>
+                            <p>Choose your payment method and schedule for automatic deduction</p>
+                        </li>
+                        <li>
+                            <strong>Download Your Policy</strong>
+                            <p>Save your policy document and keep it for reference</p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Completion Form -->
+            <form method="POST" action="{{ url_for('step5') }}" id="step5-form">
+                <div class="form-actions">
+                    <a href="{{ url_for('step4') }}" class="btn btn-secondary">← Previous Step</a>
+                    <button type="submit" class="btn btn-success" id="step5_complete_btn">Complete Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<script src="{{ url_for('static', filename='js/form-validation.js') }}"></script>
+{% endblock %}

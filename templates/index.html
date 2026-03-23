@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Insurance Application - Home{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <div class="welcome-container">
+        <div class="welcome-card">
+            <h2>Welcome to the Insurance Practice Application</h2>
+            <p>This application is designed for practicing Playwright automation testing with various UI elements and workflows.</p>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">📝</span>
+                    <h4>Personal Information</h4>
+                    <p>TextBox, TextArea, Buttons</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📋</span>
+                    <h4>Line of Business</h4>
+                    <p>ListBox, Radio Buttons</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✅</span>
+                    <h4>Coverage Selection</h4>
+                    <p>Checkboxes, File Upload</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">💰</span>
+                    <h4>Premium Calculation</h4>
+                    <p>Tables, Dynamic Data</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📄</span>
+                    <h4>Policy Certificate</h4>
+                    <p>Web Tables, Links</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✨</span>
+                    <h4>Completion</h4>
+                    <p>Summary & Success Page</p>
+                </div>
+            </div>
+
+            <div class="start-section">
+                <h3>Ready to Begin?</h3>
+                <p>Click the button below to start the insurance policy creation workflow.</p>
+                <a href="{{ url_for('step1') }}" class="btn btn-primary btn-large">Start Application</a>
+            </div>
+
+            <div class="info-box">
+                <h4>ℹ️ Testing Elements Included:</h4>
+                <ul>
+                    <li>✓ TextBox inputs (Name, Age)</li>
+                    <li>✓ TextArea (Address)</li>
+                    <li>✓ ListBox (Line of Business)</li>
+                    <li>✓ Radio Buttons (Coverage Type)</li>
+                    <li>✓ Checkboxes (Coverage Selection)</li>
+                    <li>✓ File Upload (Document)</li>
+                    <li>✓ Web Tables (Data Display)</li>
+                    <li>✓ Buttons & Links (Navigation)</li>
+                    <li>✓ Forms (Multi-step)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

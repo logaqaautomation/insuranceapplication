@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Insurance Practice Application{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="header-main">
+                    <h1>🏛️ Insurance Practice Application</h1>
+                    <p class="subtitle">A comprehensive multi-step form for automation testing</p>
+                </div>
+                {% if session.get('user') %}
+                <div class="header-auth">
+                    <span class="user-name" data-testid="user_display">{{ session['user'] }}</span>
+                    <a href="{{ url_for('logout') }}" class="btn btn-secondary btn-small" id="logout_btn">Logout</a>
+                </div>
+                {% endif %}
+            </div>
+        </header>
+
+        {% block content %}{% endblock %}
+
+        <footer class="footer">
+            <p>&copy; 2026 Insurance Practice Application - For Automation Testing</p>
+        </footer>
+    </div>
+</body>
+</html>
